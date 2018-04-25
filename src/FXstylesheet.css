@@ -1,0 +1,11 @@
+.messages {
+	-fx-fill: rgb(255, 0 , 0);
+}
+
+.rect{
+	-fx-fill: rgb(0,255,255);
+}
+
+.ellipse{
+	-fx-fill: rgb(0,255,255);
+}
