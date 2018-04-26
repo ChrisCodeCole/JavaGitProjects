@@ -5,11 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
-//import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.HBox;
-//import javafx.scene.layout.StackPane;
 import javafx.geometry.Insets;
-//import javafx.scene.text.Text;
 
 public class FXMessenger extends Application {
 
