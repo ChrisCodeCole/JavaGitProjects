@@ -1,4 +1,6 @@
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -15,6 +17,7 @@ public class MessageHBox extends HBox{
 		this.textMsg = textMsg;
 		message = new Text(textMsg);
 		message.setWrappingWidth(175);
+		message.setTextAlignment(TextAlignment.CENTER);
 		
 		double textLengthW = message.getLayoutBounds().getWidth() + 10;
 		double textLengthH = message.getLayoutBounds().getHeight() + 10;
@@ -30,14 +33,15 @@ public class MessageHBox extends HBox{
 		
 		if(alignment) {
 			this.setAlignment(Pos.BOTTOM_LEFT);
+			rectBG.getStyleClass().add("rectR");
 		}else {
 			this.setAlignment(Pos.BOTTOM_RIGHT);
+			rectBG.getStyleClass().add("rectC");
 
 		}
 		
 		
-		
-		rectBG.getStyleClass().add("rect");
+		this.setPadding(new Insets(10));
 		message.getStyleClass().add("messages");
 	}
 	

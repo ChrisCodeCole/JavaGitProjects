@@ -1,11 +1,35 @@
 .messages {
-	-fx-fill: rgb(255, 0 , 0);
+	
 }
 
 .rect{
-	-fx-fill: rgb(0,255,255);
+	
+}
+.rectR{
+	-fx-fill: skyblue;
+}
+.rectC{
+	-fx-fill: springgreen;
 }
 
-.ellipse{
-	-fx-fill: rgb(0,255,255);
+.buttons{
+	-fx-effect: dropshadow(three-pass-box, grey, 5, 0.2, 2, 2);
+	-fx-label-padding: 10;
+	-fx-background-color: firebrick;
+	-fx-font-weight: bold;
+}
+
+.buttons:hover{
+	-fx-cursor: hand;
+	-fx-background-color: crimson;
+}
+
+.clientText{
+	-fx-border-color: springgreen;
+	-fx-border-width: 2;
+}
+
+.textArea{
+	-fx-border-color: linear-gradient(to bottom right, firebrick, black);
+	-fx-border-width: 2;	
 }
