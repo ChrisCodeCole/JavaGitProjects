@@ -13,7 +13,7 @@ import java.lang.InterruptedException;
 import java.util.Scanner;
 
 
-class server
+public class server
 {
 	public static boolean prog_end_flag = false;
 	public static final int MAX_CLIENT = 10;
@@ -33,6 +33,7 @@ class server
 		while (!end) {
 			try {
 				String str = kbd.nextLine();
+				
 				if (str.equals(".")) {
 					System.out.println("Ending request detected!");
 					prog_end_flag = true;

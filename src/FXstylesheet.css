@@ -15,13 +15,14 @@
 .buttons{
 	-fx-effect: dropshadow(three-pass-box, grey, 5, 0.2, 2, 2);
 	-fx-label-padding: 10;
-	-fx-background-color: firebrick;
+	-fx-background-color: royalblue;
 	-fx-font-weight: bold;
+	-fx-text-fill: rgb(200,200,200);
 }
 
 .buttons:hover{
 	-fx-cursor: hand;
-	-fx-background-color: crimson;
+	-fx-background-color: steelblue;
 }
 
 .clientText{
@@ -30,6 +31,6 @@
 }
 
 .textArea{
-	-fx-border-color: linear-gradient(to bottom right, firebrick, black);
+	-fx-border-color: linear-gradient(to bottom right, skyblue, black);
 	-fx-border-width: 2;	
 }

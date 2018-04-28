@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 
 public class FXMessenger extends Application {
 
+	@Override
 	public void start(Stage stage){
 		
 		VBox vboxContainer = new VBox(5);
@@ -24,11 +25,14 @@ public class FXMessenger extends Application {
 		
 		VBox vboxTextArea = new VBox();
 		scrollTextArea.setContent(vboxTextArea);
+		vboxTextArea.setStyle("	-fx-background-color: royalblue;");
 			// TextArea Styles
 			scrollTextArea.setMinSize(405,300);
 			scrollTextArea.setMaxSize(405,300);
 			
 		     vboxTextArea.setPrefWidth(385);
+		     vboxTextArea.setPrefHeight(300);
+
 
 
 			
