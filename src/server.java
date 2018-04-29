@@ -24,6 +24,7 @@ public class server
 		m_sk = new Socket[MAX_CLIENT];
 		
 		SocketListener sl = new SocketListener(m_sk, 2010);
+		System.out.println("Server started at port: 2010");
 		Thread t_sl = new Thread(sl);
 		t_sl.start();
 

@@ -16,6 +16,7 @@ public class SocketListener implements Runnable
 			s[i] = null;
 		}
 	}
+	@SuppressWarnings("resource")
 	public void run() {
 		while (!server.prog_end_flag) {
 			if (n_client < server.MAX_CLIENT) {

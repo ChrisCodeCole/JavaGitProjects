@@ -90,15 +90,26 @@ public class client extends Application
 			
 			Thread t = new Thread(s_reader);
 			t.start();
-
 		
 			//Add button functionality for send message
+			endBtn.setOnAction(e -> {
+				try {
+					prog_end_flag = true;
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				Stage stage2 = (Stage) endBtn.getScene().getWindow();
+			    stage2.close();
+			});
 			sendBtn.setOnAction(new EventHandler<ActionEvent>() {
 	    	  
 	    	  @Override
 	    	  public void handle(ActionEvent e)
 	    	  {
 	    		String sendTxt = clientText.getText();
+	    		clientText.clear();
 	  			if(sendTxt.length() > 0) {
 	  				MessageHBox sendMessage = new MessageHBox(sendTxt, false);
 	  				vboxTextArea.getChildren().add(sendMessage);
