@@ -22,16 +22,17 @@ import javafx.stage.Stage;
 
 public class client extends Application
 {
-	static Socket s;
-	static SocketReader s_reader;
-	static DataOutputStream s_writer;
+	
 	public static boolean prog_end_flag = false;
 	public static boolean send_flag = false;
+	public VBox vboxContainer;
+	public VBox vboxTextArea;
+	public HBox hboxClientArea;
 	
 	@Override
 	public void start(Stage stage){
-		
-		VBox vboxContainer = new VBox(5);
+		System.out.println("Test");
+		vboxContainer = new VBox(5);
 		vboxContainer.setAlignment(Pos.CENTER);
 		vboxContainer.setPadding(new Insets(0, 50, 0 , 50));
 		
@@ -40,7 +41,7 @@ public class client extends Application
 		//Children of Container
 		ScrollPane scrollTextArea = new ScrollPane();
 		
-		VBox vboxTextArea = new VBox();
+		vboxTextArea = new VBox();
 		scrollTextArea.setContent(vboxTextArea);
 		vboxTextArea.setStyle("	-fx-background-color: royalblue;");
 			// TextArea Styles
@@ -52,16 +53,7 @@ public class client extends Application
 
 
 
-			
-			// ------------TEST MESSAGE -----------
-			// Message Containers
-//			MessageHBox messages1 = new MessageHBox("Received messages", true);
-//			MessageHBox messages2= new MessageHBox("Client text messagsssssssssssssssssssssssssssssssssssssssssssssssssss", false);			
-			
-
-
-//		vboxTextArea.getChildren().addAll(messages1,messages2);
-		HBox hboxClientArea = new HBox();
+		hboxClientArea = new HBox();
 		hboxClientArea.setPadding(new Insets(5, 0, 0, 0));
 		hboxClientArea.setSpacing(10);
 		
@@ -88,8 +80,16 @@ public class client extends Application
 		hboxClientArea.getChildren().addAll(clientText, sendBtn, endBtn);
 		
 		
-		//Create sockets and readers
-		
+		//Create sockets and readers. Connect to port
+		try {
+			Socket s = new Socket("localhost", 2010);
+
+			SocketReader1 s_reader = new SocketReader1(s, this);
+			System.out.println(this);
+			DataOutputStream s_writer = new DataOutputStream(s.getOutputStream());
+			
+			Thread t = new Thread(s_reader);
+			t.start();
 
 		
 			//Add button functionality for send message
@@ -103,26 +103,21 @@ public class client extends Application
 	  				MessageHBox sendMessage = new MessageHBox(sendTxt, false);
 	  				vboxTextArea.getChildren().add(sendMessage);
 	  				
-	  				try {
-						s_writer.writeBytes(sendTxt);
-							
+					try {
+					s_writer.writeBytes(sendTxt+"\n");
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					};
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+	  				}
 	  			}
 	    	  }
 			});
-//				try {
-//				s_writer.writeBytes(sendTxt);
-//					prog_end_flag = true;
-//					Thread.sleep(1000);
-//					send_flag = true;
-//			} catch (InterruptedException ie) {} catch (IOException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
 			
-		
+			} catch (IOException e) {
+				System.out.println("Error in connecting to the server");
+				System.out.println(e);
+				System.exit(1);
+			};
 		
 		
 		
@@ -136,51 +131,11 @@ public class client extends Application
 	
 	public static void main(String args[])
 	{
-		try {
-
-			s = new Socket("localhost", 2010);
-
-			s_reader = new SocketReader(s);
-			s_writer = new DataOutputStream(s.getOutputStream());
-			
-			Thread t = new Thread(s_reader);
-			t.start();
-		} catch (IOException e) {
-			System.out.println("Error in connecting to the server");
-			System.out.println(e);
-			System.exit(1);
-		};
+		
 		Application.launch(args);
 
 	}
 
 }
 
-class SocketReader implements Runnable
-{
-	private Socket s;
-	private BufferedReader sbr;
-	
-	SocketReader(Socket sk)
-	{
-		this.s = sk;
-		try {
-			sbr = new BufferedReader(new InputStreamReader(s.getInputStream()));
-		} catch (IOException e) {};
-		
-	}
-	
-	public void run() {
-		boolean end = false;
-		while (!end) {
-			try {
-				String str = sbr.readLine();
-				System.out.println(str);
-				if (str.equals(".")) {
-					end = true;
-					client.prog_end_flag = true;
-				}
-			} catch (IOException e) {};
-		}
-	}
-}
+

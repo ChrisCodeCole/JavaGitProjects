@@ -7,7 +7,7 @@
 //       Upon accepting a connection, it starts a new thread that echo back to the other clients.
 //
 
-import java.io.*;
+//import java.io.*;
 import java.net.*;
 import java.lang.InterruptedException;
 import java.util.Scanner;
@@ -30,6 +30,7 @@ public class server
 		Scanner kbd = new Scanner(System.in);
 		boolean end = false;
 		
+		//Simple check for ending server
 		while (!end) {
 			try {
 				String str = kbd.nextLine();
@@ -45,72 +46,5 @@ public class server
 	}
 }
 
-class SocketListener implements Runnable
-{
-	private Socket[] s;
-	private int port;
-	private int n_client;
-	
-	SocketListener(Socket[] sk, int p)
-	{
-		this.s = sk;
-		this.port = p;
-		for (int i = 0; i < server.MAX_CLIENT; i++) {
-			s[i] = null;
-		}
-	}
-	public void run() {
-		while (!server.prog_end_flag) {
-			if (n_client < server.MAX_CLIENT) {
-				try {
-					s[n_client] = (new ServerSocket(port)).accept();
-					System.out.println("[" + n_client + "]" + " Connected");
-					EchoServer es = new EchoServer(s, n_client);
-					Thread t_es = new Thread(es);
-					t_es.start();
-					n_client++;
-				} catch (IOException e) {};
-			} else {
-				System.out.println("Maximum client reached!");
-			}
-		}
-	}
-}
 
-class EchoServer implements Runnable
-{
-	private Socket[] s;
-	private int idx;
-	private BufferedReader sbr;
-	
-	EchoServer(Socket[] sk, int index)
-	{
-		this.s = sk;
-		this.idx = index;
-		try {
-			sbr = new BufferedReader(new InputStreamReader(s[idx].getInputStream()));
-		} catch (IOException e) {};
-	}
-	
-	public void run() {
-		boolean end = false;
-		while (!end) {
-			try {
-				// read from the socket
-				String str = sbr.readLine();
-				// echo to the other sockets
-				for (int i = 0; i < server.MAX_CLIENT; i++) {
-					if ((s[i] != null) && (i != idx)) {
-						DataOutputStream s_writer = new DataOutputStream(s[i].getOutputStream());
-						s_writer.writeBytes(str+"\n");
-						System.out.println("[" + idx + "]" + str + " to " + i);
-					}
-				}
-				if (server.prog_end_flag == true) {
-					end = true;
-				}
-			} catch (IOException e) {};
-		}
-	}
-}
 
